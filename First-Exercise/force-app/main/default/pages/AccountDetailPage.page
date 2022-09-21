@@ -1,4 +1,4 @@
-<apex:page standardController="Account" >
+<apex:page standardController="Account" showHeader=false>
 
     <apex:form>
         <apex:pageBlock title='Account Primary Contact'>
