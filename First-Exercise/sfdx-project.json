@@ -1,5 +1,4 @@
 {
-  
   "packageDirectories": [
     {
       "path": "force-app",
@@ -8,6 +7,6 @@
   ],
   "name": "First-Exercise",
   "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com/",
+  "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "55.0"
 }
