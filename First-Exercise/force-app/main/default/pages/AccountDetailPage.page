@@ -39,10 +39,6 @@
                     <apex:column value="{!contact.Phone}" />
                     <apex:column value="{!contact.Is_Primary_Contact__c}" />
 
-                    <apex:column rendered="{! IF(contact.Is_Primary_Contact__c, true, false) }">
-                        <apex:image url="../staticresources/img/key.png" />
-                    </apex:column>
-
                     <apex:column rendered="{! IF(contact.Is_Primary_Contact__c, false, true) }">
                         <apex:commandLink action="{!showPopup}" reRender="popup">
                             Set As Primary
