@@ -8,7 +8,7 @@ public with sharing class ContactPrimaryPhoneAsyncUpdater {
             contacts = [Select Id, AccountId, Primary_Contact_Phone__c from Contact Where AccountId IN :accPrimPhoneMap.keySet()];
         } catch (QueryException e) {
             
-            throw new HandledException(System.Label.Query_Error);
+            throw new HandledException(e.getMessage());
         } 
         
         for (Contact cnt : contacts) {
@@ -21,7 +21,7 @@ public with sharing class ContactPrimaryPhoneAsyncUpdater {
             Database.update(contacts, false); 
         } catch (DmlException e) {
             
-            throw new HandledException(System.Label.Update_Error);
+            throw new HandledException(e.getMessage());
         }
   }
 }

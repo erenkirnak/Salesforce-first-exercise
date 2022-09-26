@@ -16,7 +16,7 @@ public with sharing class ContactTriggerHandler {
             primContacts = [SELECT Id, AccountId FROM Contact WHERE AccountId IN :accountIds AND Is_Primary_Contact__c = true];
         } catch (QueryException e) {
             
-            throw new HandledException(System.Label.Query_Error);
+            throw new HandledException(e.getMessage());
         }
         for (Contact primContact : primContacts) {
             
@@ -29,7 +29,7 @@ public with sharing class ContactTriggerHandler {
             Contact oldPrimaryContact = primContactMap.get(contact.AccountId);
             if ( contact.Is_Primary_Contact__c && oldPrimaryContact != null && oldPrimaryContact.Id != contact.Id) {
 
-                contact.addError(System.Label.Primary_Contact_Exists);
+                contact.addError('Primary Contact Exist!');
             }
         }
         
