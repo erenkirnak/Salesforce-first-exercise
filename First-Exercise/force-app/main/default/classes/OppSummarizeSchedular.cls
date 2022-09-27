@@ -21,7 +21,7 @@ global class OppSummarizeSchedular implements Schedulable{
 
     global void execute(SchedulableContext sc) {
 
-        SummarizeOppAmountsPerAccount batch = new SummarizeOppAmountsPerAccount();
+        SummarizeAllOppAmountsPerAccount batch = new SummarizeAllOppAmountsPerAccount();
         Id batchId = Database.executeBatch(batch);          
     }
 }

@@ -42,7 +42,6 @@ public class SummarizeAllOppAmountsPerAccount implements Database.Batchable<sObj
         // execute any post-processing operations
         List<Contact> primContacts;
         try {
-            
             primContacts = [SELECT Id, Email, AccountId, Account.Name FROM Contact WHERE Is_Primary_Contact__c=true];
         } catch (QueryException e) {
             
@@ -62,7 +61,7 @@ public class SummarizeAllOppAmountsPerAccount implements Database.Batchable<sObj
                     '</tr>';
 
             Map<String, Decimal> summarizedOpp = accountOpportunities.get(primContact.AccountId);
-            if (summarizedOpp==null) {
+            if (summarizedOpp == null) {
                 
                 continue;
             }
