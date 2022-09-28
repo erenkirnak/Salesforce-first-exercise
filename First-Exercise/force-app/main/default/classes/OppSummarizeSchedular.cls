@@ -1,4 +1,4 @@
-global class OppSummarizeSchedular implements Schedulable{
+global with sharing class OppSummarizeSchedular implements Schedulable{
 
     public static String dailySched = '0 0 10 1/1 * ? *';  //Every Day 10:00AM
     public static String weeklySched = '0 0 13 ? * FRI *'; //once a week (Friday at 1:00 PM)
