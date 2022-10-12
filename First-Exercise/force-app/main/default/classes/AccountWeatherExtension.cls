@@ -16,7 +16,7 @@ public with sharing class AccountWeatherExtension {
   }
 
   public String getTemperature() {
-    return String.valueOf((this.wrapper.Main.temp - 273.15).intValue());
+    return String.valueOf(this.wrapper.Main.temp);
   }
 
   public String getWeatherIconUrl() {

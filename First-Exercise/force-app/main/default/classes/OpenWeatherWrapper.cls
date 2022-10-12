@@ -1,3 +1,4 @@
+// Wrapper Class for retrieved OpenWeather Data
 public with sharing class OpenWeatherWrapper {
   public class Weather {
     public Integer id;
@@ -51,6 +52,7 @@ public with sharing class OpenWeatherWrapper {
     public Integer humidity;
   }
 
+  // Deserialize JSON data
   public static OpenWeatherWrapper parse(String json) {
     return (OpenWeatherWrapper) System.JSON.deserialize(
       json,

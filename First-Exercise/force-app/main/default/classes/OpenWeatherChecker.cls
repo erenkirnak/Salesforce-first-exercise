@@ -1,8 +1,10 @@
+//Invokes OpenWeather API to receive weather condition
 public with sharing class OpenWeatherChecker {
   //Created custom label for security and reusability
   private static String API_KEY = System.Label.OpenWeather_API_Key;
   private static String ENDPOINT = System.Label.OpenWeather_EndPoint;
 
+  //Retrieves the current weather condition of the given city from openweathermap api
   public static OpenWeatherWrapper checkCurrentWeather(String cityName) {
     if (String.isBlank(cityName)) {
       throw new HandledException('cityName parameter cannot be null');

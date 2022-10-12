@@ -1,16 +1,18 @@
+// Batch class that summarizes CLosed Won, Open, Closed Lost Opportunities per Account and sends the result as email.
 public class SummarizeAllOppAmountsPerAccount implements Database.Batchable<sObject>, Database.Stateful {
   private Map<Id, Map<String, Decimal>> accountOpportunities = new Map<Id, Map<String, Decimal>>();
   private List<String> stages = new List<String>();
 
+  // Defines the scope of the batch
   public Database.QueryLocator start(Database.BatchableContext bc) {
     stages.add('Closed Won');
     stages.add('Open');
     stages.add('Closed Lost');
     return Database.getQueryLocator(
-      'SELECT Id, Account.Name, AccountId, Amount, StageName FROM Opportunity WHERE StageName IN :stages'
+      'SELECT Id, Account.Name, AccountId, Amount, StageName, TotalOpportunityQuantity FROM Opportunity WHERE StageName IN :stages'
     );
   }
-
+  // Summarizes the opportunity amounts per Account per StageName
   public void execute(Database.BatchableContext bc, List<Opportunity> records) {
     // process each batch of records
     for (Opportunity opp : records) {
@@ -23,14 +25,16 @@ public class SummarizeAllOppAmountsPerAccount implements Database.Batchable<sObj
       );
 
       String stage = opp.StageName;
-      if (stageAmountMap.get(stage) == null) {
+      if (stage == 'Closed Won') {
         stageAmountMap.put(stage, opp.Amount);
+      } else if (stage == 'Open'){
+        stageAmountMap.put(stage, opp.TotalOpportunityQuantity);
       } else {
-        stageAmountMap.put(stage, stageAmountMap.get(stage) + opp.Amount);
+        stageAmountMap.put(stage, opp.TotalOpportunityQuantity - opp.Amount);
       }
     }
   }
-
+  // Creates and sends emails to all primary contacts with the summarized opportunity amounts.
   public void finish(Database.BatchableContext bc) {
     // execute any post-processing operations
     List<Contact> primContacts;
@@ -62,7 +66,7 @@ public class SummarizeAllOppAmountsPerAccount implements Database.Batchable<sObj
       Map<String, Decimal> summarizedOpp = accountOpportunities.get(
         primContact.AccountId
       );
-      if (summarizedOpp == null) {
+      if (summarizedOpp.isEmpty()) {
         continue;
       }
       for (String stage : stages) {
@@ -103,6 +107,7 @@ public class SummarizeAllOppAmountsPerAccount implements Database.Batchable<sObj
     Messaging.sendEmail(mails);
   }
 
+  // Create Email Template
   private Messaging.SingleEmailMessage createEmail(
     String to,
     String subject,

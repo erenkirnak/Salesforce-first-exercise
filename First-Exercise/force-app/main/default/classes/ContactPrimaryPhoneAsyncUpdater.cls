@@ -1,4 +1,6 @@
+// Contains async method for ContactTriggerHandler.cls
 public with sharing class ContactPrimaryPhoneAsyncUpdater {
+  // Async method that updates all the contacts belonging to given account's Primary_Contact_Phone field 
   @future
   public static void updatePrimaryPhoneOfAccount(
     Map<Id, String> accPrimPhoneMap

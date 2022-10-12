@@ -1,4 +1,6 @@
+// Handles Contact Trigger
 public with sharing class ContactTriggerHandler {
+  // Validates contact info before insert/update
   public static void handleBefore(List<Contact> contacts) {
     List<Id> accountIds = new List<Id>();
     for (Contact contact : contacts) {
@@ -28,22 +30,24 @@ public with sharing class ContactTriggerHandler {
         oldPrimaryContact != null &&
         oldPrimaryContact.Id != contact.Id
       ) {
-        contact.addError('There is a primary contact associated with the account already.');
+        contact.addError(
+          'There is a primary contact associated with the account already.'
+        );
       }
     }
   }
-
+  //Updates primary contact phone after insert
   public static void handleAfterInsert(List<Contact> inserted) {
     handleAfterHelper(inserted, null, true);
   }
-
+  //Updates primary contact phone after update
   public static void handleAfterUpdate(
     List<Contact> updated,
     Map<Id, Contact> oldMap
   ) {
     handleAfterHelper(updated, oldMap, false);
   }
-
+  //Updates primary contact phone after insert insert/update
   private static void handleAfterHelper(
     List<Contact> contacts,
     Map<Id, Contact> oldMap,

@@ -1,16 +1,19 @@
+// Extension for Standard Account Controller that provides popup, search
 public with sharing class PrimaryContactsExtension {
   private final Account acct;
   public String searchVar { get; set; }
   public boolean displayPopup { get; set; }
   public String primContactId { get; set; }
 
+  // Constructor of class to initialze StandardController and acct
   public PrimaryContactsExtension(ApexPages.StandardController stdController) {
     this.acct = (Account) stdController.getRecord();
   }
 
+  // Search mechanism that can be used by Visualforce Pages.
   public List<Contact> getRelatedContacts() {
     try {
-      if (searchVar == null || searchVar == '') {
+      if (String.isBlank(searchVar)) {
         return [
           SELECT Id, Name, Title, Phone, Is_Primary_Contact__c
           FROM Contact
@@ -29,6 +32,7 @@ public with sharing class PrimaryContactsExtension {
       throw new HandledException(e.getMessage());
     }
   }
+  // Sets the current accounts PrimaryContact to given Contact
   public void setPrimaryContact() {
     closePopup();
     Contact primContact = getPrimContact();
@@ -56,8 +60,9 @@ public with sharing class PrimaryContactsExtension {
     }
   }
 
+  // Helper function that validates the given primary contact.
   private Contact getPrimContact() {
-    Contact primContact = null;
+    Contact primContact;
     try {
       primContact = [
         SELECT Id, AccountId, Is_Primary_Contact__c
@@ -66,7 +71,7 @@ public with sharing class PrimaryContactsExtension {
         LIMIT 1
       ];
     } catch (QueryException e) {
-      throw new NoSuchElementException('No contact exist with the given id.');
+      throw new NoSuchElementException(System.Label.NoSuchElement);
     }
 
     if (primContact.AccountId != acct.Id) {
