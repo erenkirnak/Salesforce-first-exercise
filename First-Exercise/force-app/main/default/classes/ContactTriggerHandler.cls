@@ -28,7 +28,7 @@ public with sharing class ContactTriggerHandler {
         oldPrimaryContact != null &&
         oldPrimaryContact.Id != contact.Id
       ) {
-        contact.addError('Primary Contact Exist!');
+        contact.addError('There is a primary contact associated with the account already.');
       }
     }
   }

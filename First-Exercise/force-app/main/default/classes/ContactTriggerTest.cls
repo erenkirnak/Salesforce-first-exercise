@@ -1,4 +1,4 @@
-@isTest
+@IsTest
 private class ContactTriggerTest {
   private static Contact contactToUpdate;
   private static Account testAcc;
@@ -58,7 +58,6 @@ private class ContactTriggerTest {
     );
     Test.stopTest();
 
-    System.assert(!result.isSuccess());
     System.assertEquals(
       'There is a primary contact associated with the account already.',
       result.getErrors()[0].getMessage()
