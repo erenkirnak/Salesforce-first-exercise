@@ -1,0 +1,24 @@
+Class Header
+
+
+/******************************************************
+* @Name             :
+* @Description      :   
+* @Created By       : Eren Kırnak
+* @Created Date     : Oct 13, 2022
+* @Modification Log :
+*******************************************************/
+
+
+
+Method Header
+
+/******************************************************
+* @Name             :
+* @Description      :   
+* @Created By       : Eren Kırnak
+* @Created Date     : Oct 13, 2022
+* @Param            
+* @Param            
+* @Return    
+*******************************************************/
