@@ -40,7 +40,8 @@ public with sharing class ContactTriggerHandler {
         if (
           !contact.Is_Primary_Contact__c &&
           oldPrimaryContact != null &&
-          oldPrimaryContact.Id != contact.Id
+          oldPrimaryContact.Id != contact.Id &&
+          primContacts.size() > 1
         ) {
           contact.addError(
             'There is a primary contact associated with the account already.'
