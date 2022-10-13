@@ -34,19 +34,19 @@ public with sharing class ContactTriggerHandler {
         primContactMap.put(primContact.AccountId, primContact);
       }
 
-      // // Validate
-      // for (Contact contact : contacts) {
-      //   Contact oldPrimaryContact = primContactMap.get(contact.AccountId);
-      //   if (
-      //     contact.Is_Primary_Contact__c &&
-      //     oldPrimaryContact != null &&
-      //     oldPrimaryContact.Id != contact.Id
-      //   ) {
-      //     contact.addError(
-      //       'There is a primary contact associated with the account already.'
-      //     );
-      //   }
-      // }
+      // Validate
+      for (Contact contact : contacts) {
+        Contact oldPrimaryContact = primContactMap.get(contact.AccountId);
+        if (
+          !contact.Is_Primary_Contact__c &&
+          oldPrimaryContact != null &&
+          oldPrimaryContact.Id != contact.Id
+        ) {
+          contact.addError(
+            'There is a primary contact associated with the account already.'
+          );
+        }
+      }
     }
     /******************************************************
      * @Name             : handleAfterInsert
